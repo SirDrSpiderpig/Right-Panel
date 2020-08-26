@@ -16,18 +16,18 @@
 int FMSpin = 16;
 int CRSpin = 14;
 int COMpin = 15;
-int mode= 1;
-//1 FMS
-//2 CRS
-//3 COM
+int mode= 0;
+//0 FMS
+//1 CRS
+//2 COM
 
 unsigned long lastButtonPress = 0;
 
 byte buttons[NUMROWS][NUMCOLS] = {
   {0,1,2},
-  {5,6,7},
-  {10,11,12},
-  {15,16,17},
+  {3,4,5},
+  {6,7,8},
+  {9,10,11},
 };
 
 struct rotariesdef {
@@ -39,10 +39,9 @@ struct rotariesdef {
 };
 
 rotariesdef rotaries[NUMROTARIES] {
-  {0,1,24,25,0},
-  {2,3,26,27,0},
-  {4,5,28,29,0},
-  {6,7,30,31,0},
+  {2,3,12,15,0},
+  {4,5,18,21,0},
+  {6,7,24,27,0},
 };
 
 #define DIR_CCW 0x10
@@ -167,11 +166,20 @@ unsigned char rotary_process(int _i) {
 void CheckAllEncoders(void) {
   for (int i=0;i<NUMROTARIES;i++) {
     unsigned char result = rotary_process(i);
+    int Modi;
+    
+
     if (result == DIR_CCW) {
-      Joystick.setButton(rotaries[i].ccwchar, 1); delay(50); Joystick.setButton(rotaries[i].ccwchar, 0);
+      Modi=rotaries[i].ccwchar+mode;
+      Serial.println(Modi);
+      Joystick.setButton(Modi, 1); delay(50); Joystick.setButton(Modi, 0);
+      
     };
     if (result == DIR_CW) {
-      Joystick.setButton(rotaries[i].cwchar, 1); delay(50); Joystick.setButton(rotaries[i].cwchar, 0);
+      Modi=rotaries[i].cwchar+mode;
+      Serial.println(Modi);
+      Joystick.setButton(Modi, 1); delay(50); Joystick.setButton(Modi, 0);
+      
     };
   }
 }
