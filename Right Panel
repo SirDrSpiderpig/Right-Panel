@@ -120,8 +120,14 @@ void loop() {
 }
 
 void CheckAllButtons(void) {
+
+    int key = buttbx.getKey();
+
+    if (key != NO_KEY){
+      Serial.println(key);
+    }
       if (buttbx.getKeys())
-    {
+    { 
        for (int i=0; i<LIST_MAX; i++)   
         {
            if ( buttbx.key[i].stateChanged )   
@@ -130,6 +136,7 @@ void CheckAllButtons(void) {
                     case PRESSED:
                     case HOLD:
                               Joystick.setButton(buttbx.key[i].kchar, 1);
+                              Serial.println(i);
                               break;
                     case RELEASED:
                     case IDLE:
