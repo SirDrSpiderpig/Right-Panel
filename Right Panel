@@ -109,6 +109,7 @@ void setup() {
   pinMode(CRSpin,OUTPUT);
   pinMode(COMpin,OUTPUT);
   Serial.begin(9600);
+  digitalWrite(FMSpin,HIGH);
  }
 
 void loop() { 
@@ -150,16 +151,25 @@ void CheckAllButtons(void) {
       {
          mode=2;
          Serial.println("MODE COM");
+         digitalWrite(COMpin,HIGH);
+         digitalWrite(CRSpin,LOW);
+         digitalWrite(FMSpin,LOW);
       }
       if (key==5)
       {
          mode=1;
          Serial.println("MODE CRS");
+         digitalWrite(CRSpin,HIGH);
+         digitalWrite(FMSpin,LOW);
+         digitalWrite(COMpin,LOW);
       }
       if (key==8)
       {
          mode=0;
          Serial.println("MODE FMS");
+         digitalWrite(FMSpin,HIGH);
+         digitalWrite(CRSpin,LOW);
+         digitalWrite(COMpin,LOW);
       }
       if (key==11)
       {
