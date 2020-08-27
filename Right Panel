@@ -8,11 +8,10 @@
 #include <Joystick.h>
 
 #define ENABLE_PULLUPS
-#define NUMROTARIES 4
+#define NUMROTARIES 3
 #define NUMBUTTONS 24
 #define NUMROWS 4
 #define NUMCOLS 3
-#define switchPin 13
 int FMSpin = 16;
 int CRSpin = 14;
 int COMpin = 15;
@@ -21,7 +20,6 @@ int mode= 0;
 //1 CRS
 //2 COM
 
-unsigned long lastButtonPress = 0;
 
 byte buttons[NUMROWS][NUMCOLS] = {
   {0,1,2},
@@ -95,7 +93,7 @@ const unsigned char ttable[7][4] = {
 #endif
 
 byte rowPins[NUMROWS] = {21,20,19,18}; 
-byte colPins[NUMCOLS] = {10,9,8}; 
+byte colPins[NUMCOLS] = {10,9,8};
 
 Keypad buttbx = Keypad( makeKeymap(buttons), rowPins, colPins, NUMROWS, NUMCOLS); 
 
@@ -111,16 +109,15 @@ void setup() {
   pinMode(CRSpin,OUTPUT);
   pinMode(COMpin,OUTPUT);
   Serial.begin(9600);
-}
+ }
 
 void loop() { 
 
   CheckAllEncoders();
+
   CheckAllButtons();
-  digitalWrite(FMSpin,HIGH );
+
 }
-
-
 
 void CheckAllButtons(void) {
       if (buttbx.getKeys())
